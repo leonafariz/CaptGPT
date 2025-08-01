@@ -436,16 +436,7 @@
         const typingIndicator = document.getElementById('typingIndicator');
         let isFirstMessage = true;
 
-        // Sample AI responses
-        const aiResponses = [
-            "Halo! Saya adalah asisten AI yang siap membantu Anda. Ada yang bisa saya bantu hari ini?",
-            "Itu pertanyaan yang menarik! Berdasarkan pemahaman saya, saya bisa memberikan beberapa perspektif tentang hal tersebut.",
-            "Terima kasih telah bertanya. Saya akan mencoba memberikan jawaban yang komprehensif untuk Anda.",
-            "Saya senang bisa membantu! Mari kita bahas topik ini lebih dalam.",
-            "Pertanyaan yang bagus! Ini adalah area yang cukup kompleks, tapi saya akan menjelaskannya dengan sederhana.",
-            "Saya memahami kekhawatiran Anda. Berikut beberapa hal yang perlu dipertimbangkan:",
-            "Berdasarkan informasi yang tersedia, saya dapat memberikan beberapa insight tentang hal ini."
-        ];
+
 
         // Auto-resize textarea
         messageInput.addEventListener('input', function() {
@@ -507,8 +498,14 @@
                 const data = await response.json();
                 hideTypingIndicator();
                 
-                // Use the response from webhook
-                const aiResponse = data.output || 'Maaf, tidak ada respons dari server.';
+                // Use the response from webhook (handle array format)
+                let aiResponse = 'Maaf, tidak ada respons dari server.';
+                if (Array.isArray(data) && data.length > 0 && data[0].output) {
+                    aiResponse = data[0].output;
+                } else if (data.output) {
+                    aiResponse = data.output;
+                }
+                
                 addMessage(aiResponse, 'assistant');
                 
             } catch (error) {
@@ -526,7 +523,9 @@
             messageContent.className = 'message-content';
             
             if (sender === 'user') {
-                messageContent.textContent = content;
+                // For user messages, also handle line breaks
+                const formattedContent = content.replace(/\\n/g, '\n').replace(/\n/g, '<br>');
+                messageContent.innerHTML = formattedContent;
                 messageDiv.appendChild(messageContent);
                 chatContainer.appendChild(messageDiv);
                 scrollToBottom();
@@ -545,9 +544,14 @@
             let index = 0;
             const speed = 1000 / 400; // 400 characters per second = 2.5ms per character
             
+            // Convert \n to actual line breaks
+            const formattedText = text.replace(/\\n/g, '\n');
+            
             function type() {
-                if (index < text.length) {
-                    element.textContent = text.slice(0, index + 1);
+                if (index < formattedText.length) {
+                    const currentText = formattedText.slice(0, index + 1);
+                    // Use innerHTML to preserve line breaks
+                    element.innerHTML = currentText.replace(/\n/g, '<br>');
                     index++;
                     scrollToBottom();
                     setTimeout(type, speed);
@@ -601,5 +605,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96830ace930240c5',t:'MTc1NDAyNzI2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9683131be33aaedc',t:'MTc1NDAyNzYwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

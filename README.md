@@ -1,2 +1,2 @@
-# CaptGPT
+# Baca Ini
 Caption GPT

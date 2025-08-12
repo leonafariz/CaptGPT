@@ -1,5 +1,6 @@
-# 📥 [Download CaptGPT APK]([https://drive.google.com/uc?export=download&id=1fS0L2DMsDLWhL0ErhujTrsB0EYO5tarr](https://drive.google.com/file/d/1fS0L2DMsDLWhL0ErhujTrsB0EYO5tarr/view?usp=drive_link))  
+# 📥 [Download CaptGPT APK]
 
+[Download CaptGPT APK](https://drive.google.com/file/d/1fS0L2DMsDLWhL0ErhujTrsB0EYO5tarr/view?usp=drive_link)  
 ⚠️ Link berlaku **30 hari**. Jika sudah kadaluarsa, akan diperpanjang.  
 💬 Jika saya lupa perpanjang, tolong ingatkan di komunitas WhatsApp:  
 🔗 [https://whatsapp.com/channel/0029VbAf3711nozApJR0WB1D](https://whatsapp.com/channel/0029VbAf3711nozApJR0WB1D)  
